@@ -4,21 +4,36 @@ const jwt = require('jsonwebtoken');
 
 const KullaniciModel = require('../models/KullaniciModel');
 
-exports.YetkiKontrol = async (KullaniciEmail, YetkiToken, Action) => {
-    KullaniciModel.find({ email: KullaniciEmail }).exec().then(results => {
-        if (results.YetkiToken !== YetkiToken) { return false; }
-        if (results.length == 0) { return false };
-        if (results === "root") { return true };
-        switch (Action) {
-            case "KullaniciSil":
-                if (results.KullaniciYetkileri === "Mudur" || results.KullaniciYetkileri === "Personel") { return true; };
-                return false;
-            case "HesapGuncelleme":
-                if (results.KullaniciYetkileri === "Mudur" || results.KullaniciYetkileri === "Personel") { return true; };
-                return false;
-            case "SubeIslem":
-                if (results.KullaniciYetkileri === "Mudur") { return true; };
-                return false;
-        }
-    }).catch(err => { console.log(err); });
-}
+exports.YetkiKontrol = (KullaniciEmail, YetkiToken, Action) => {
+    return new Promise((resolve, reject) => {
+        KullaniciModel.findOne({ KullaniciEmail: KullaniciEmail })
+            .then(user => {
+                if (!user) {
+                    return resolve(false); // Kullanıcı bulunamadı
+                }
+
+                if (user.YetkiToken !== YetkiToken) {
+                    return resolve(false); // Yetki tokenları eşleşmiyor
+                }
+
+                if (user.KullaniciYetkileri === "root") {
+                    return resolve(true); // Root kullanıcısı her zaman yetkilidir
+                }
+
+                switch (Action) {
+                    case "KullaniciSil":
+                        return resolve(user.KullaniciYetkileri === "Mudur" || user.KullaniciYetkileri === "Personel");
+                    case "HesapGuncelleme":
+                        return resolve(user.KullaniciYetkileri === "Mudur" || user.KullaniciYetkileri === "Personel");
+                    case "SubeIslem":
+                        return resolve(user.KullaniciYetkileri === "Mudur");
+                    default:
+                        return resolve(false); // Geçersiz eylem
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                return resolve(false); // Hata durumunda false döndür
+            });
+    });
+};

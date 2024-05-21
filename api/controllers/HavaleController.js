@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const bcrpyt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const HavaleModel = require('../models/HaveleModel');
+const HavaleModel = require('../models/HavaleModel');
 const KullaniciModel = require('../models/KullaniciModel');
-const { YetkiKontrol } = require('./YetkiController');
+const { YetkiKontrol } = require('../middleware/YetkiKontrol');
 const HesapModel = require('../models/HesapModel');
 
 exports.GecmisHavaleler = async (req, res, next) => {

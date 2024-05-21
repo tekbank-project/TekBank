@@ -5,21 +5,23 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const dotenv = require('dotenv');
 
-require('dotenv').config();
+// Load environment variables from .env file
+
 
 const HavaleRoutes = require('./routes/HavaleRoute');
-const HesapRoutes = require('./api/routes/lectures');
-const KullaniciRoutes = require('./api/routes/grades');
+const HesapRoutes = require('./routes/HesapRoute');
+const KullaniciRoutes = require('./routes/KullaniciRoute');
 const SubeRoutes = require('./routes/SubeRoute');
-
+dotenv.config();
 const databaseUri = process.env.DB_LINK;
-
+console.log("databaseUri: " + databaseUri);
 mongoose.connect(databaseUri)
 mongoose.connection.on('error', (err) => { console.log('Something went wrong with database connection:\n' + err); });
 mongoose.connection.once('open', () => { console.log('Successfully connected to database'); });
 
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 3000;
 app.listen(port, () => { console.log('Server started and listening to port:' + port); });
 
 app.use(helmet({ xPoweredBy: false }));

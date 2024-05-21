@@ -6,7 +6,7 @@ const auth = require("../middleware/isAuth");
 
 router.post('/tumsubeler', auth, SubeController.TumSubeler);
 router.post('/yenisube', auth, SubeController.YeniSube);
-router.patch('/guncelle', auth, SubeController.SubeGuncelle);
-router.delete('/subesil', auth, SubeController.SubeSil);
+router.patch('/guncelle', auth, SubeController.HesapGuncelle);
+router.delete('/hesapsil', auth, SubeController.HesapSil);
 
 module.exports = router;
