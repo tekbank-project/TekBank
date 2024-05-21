@@ -1,0 +1,25 @@
+{
+  "name": "tekbankapi",
+  "version": "1.0.0",
+  "description": "Backend API for TekBank",
+  "main": "apiserver.js",
+  "scripts": {
+    "start-api": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "morgan": "^1.10.0",
+    "randombytes": "^2.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
