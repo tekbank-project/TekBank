@@ -10,7 +10,10 @@ exports.YetkiKontrol = async (KullaniciEmail, Action) => {
         if (results === "root") { return true };
         switch (Action) {
             case "KullaniciSil":
-                if (results === "Mudur" || results === "Personel") { return true; };
+                if (results.KullaniciYetkileri === "Mudur" || results.KullaniciYetkileri === "Personel") { return true; };
+                return false;
+            case "SubeIslem":
+                if (results.KullaniciYetkileri === "Mudur") { return true; };
                 return false;
         }
     }).catch(err => {

@@ -7,7 +7,7 @@ const SubeModel = require('../models/SubeModel');
 exports.TumSubeler = async (req, res, next) => {
     const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
-    if (YetkiKontrol(req.body.email, "KullaniciSil") === false) {
+    if (YetkiKontrol(req.body.email, "SubeIslem") === false) {
         return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
     };
 
@@ -23,7 +23,7 @@ exports.TumSubeler = async (req, res, next) => {
 exports.YeniSube = async (req, res, next) => {
     const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
-    if (YetkiKontrol(req.body.email, "KullaniciSil") === false) {
+    if (YetkiKontrol(req.body.email, "SubeIslem") === false) {
         return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
     };
 
@@ -43,7 +43,7 @@ exports.YeniSube = async (req, res, next) => {
 exports.HesapGuncelle = async (req, res, next) => {
     const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
-    if (YetkiKontrol(req.body.email, "KullaniciSil") === false) {
+    if (YetkiKontrol(req.body.email, "SubeIslem") === false) {
         return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
     };
 
@@ -66,7 +66,7 @@ exports.HesapGuncelle = async (req, res, next) => {
 exports.HesapSil = async (req, res, next) => {
     const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
-    if (YetkiKontrol(req.body.email, "KullaniciSil") === false) {
+    if (YetkiKontrol(req.body.email, "SubeIslem") === false) {
         return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
     };
 
