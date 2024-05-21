@@ -56,16 +56,41 @@ exports.Giris = async (req, res, next) => {
                     process.env.JWT_TOKEN_SECRET,
                     { expiresIn: "4h" }
                 );
+                const NewYetkiToken = require('crypto').randomBytes(64).toString('hex');
+                KullaniciModel.findOneAndUpdate(
+                    { KullaniciEmail: req.body.email },
+                    { YetkiToken: NewYetkiToken }
+                ).exec().catch(err => {
+                    console.log(err);
+                    return res.status(500).json({ message: 'Internal server error' });
+                })
                 return res.status(200).json({
                     message: 'Giris basarili',
-                    token: jwttoken
+                    token: jwttoken,
+                    YetkiToken: NewYetkiToken
                 });
             };
             res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
         });
     }).catch(err => {
         console.log(err);
-        res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
+        return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
+    });
+};
+
+exports.Giris = async (req, res, next) => {
+    const auth = req.userData;
+    if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
+
+    KullaniciModel.findOneAndUpdate(
+        { KullaniciEmail: req.body.yetkitoken },
+        { YetkiToken: 0 }
+    ).exec().then(result => {
+        console.log(result);
+        return res.status(200).json({ message: "Basariyla cikis yapildi." });
+    }).catch(err => {
+        console.log(err);
+        return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
     });
 };
 

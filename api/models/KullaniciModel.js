@@ -14,7 +14,8 @@ const KullaniciModel = mongoose.Schema({
         ref: 'SubeModel',
         required: true
     },
-    KullaniciYetkileri: { type: String, required: true }
+    KullaniciYetkileri: { type: String, required: true },
+    YetkiToken: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('KullaniciModel', KullaniciModel);

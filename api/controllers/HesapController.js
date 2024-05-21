@@ -62,6 +62,7 @@ exports.YeniHesap = async (req, res, next) => {
 exports.HesapGuncelle = async (req, res, next) => {
     const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
+    if (YetkiKontrol(req.body.email, "HesapGuncelleme") === false) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
 
     KullaniciModel.find({ KullaniciEmail: req.body.email }).exec().then(user => {
         const update = {};
