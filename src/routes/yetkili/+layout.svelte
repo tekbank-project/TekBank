@@ -35,8 +35,8 @@
         <li><a href="/islem/yenihavale" class="menu-btn">Havale Yap</a></li>
         <li><a href="/islem/islemgecmisi" class="menu-btn">İşlem Geçmişi</a></li>
         <li class="section-header">Seçenekler</li>
-        <li><a href="/kullanici/cikis" class="menu-btn">Hesap Düzenle</a></li>
-        <li><a href="/kullanici/cikis" class="menu-btn">Şube İşlemleri</a></li>
+        <li><a href="/kullanici/kullaniciduzenle" class="menu-btn">Kullanıcı Güncelle</a></li>
+        <li><a href="/yetkili/sube" class="menu-btn">Şube İşlemleri</a></li>
         <li><a href="/kullanici/cikis" class="menu-btn">Çıkış Yap</a></li>
     </ul>
 </aside>

@@ -101,6 +101,9 @@
         }
         alert(message);
     }
+    export async function handleDelete() {
+        
+    }
 </script>
 
 <main id="content">
@@ -109,11 +112,12 @@
         <form id="searchbox" on:submit|preventDefault={handleSearch}>
             <input
                 type="text"
-                class="hesapduzenle-input"
+                class="hesapduzenle-input full"
                 placeholder="Kullanıcı ID"
                 bind:value={kullaniciidinput}
             />
-            <button class="btn">Kullanıcıyı Ara</button>
+            <button class="btn" on:canplay={handleSearch}>Kullanıcıyı Ara</button>
+            <button class="btn" on:click={handleDelete}>Hesabı Sil</button>
         </form>
         <form on:submit={handleSubmit}>
             <div class="form-cell">
@@ -230,10 +234,7 @@
                     />
                 </div>
             </div>
-            <div id="buttons">
-                <button class="btn">Hesabı Sil</button>
-                <button class="btn">Değişiklikleri Kaydet</button>
-            </div>
+            <button class="btn full" type="submit">Değişiklikleri Kaydet</button>
         </form>
     </div>
 </main>
@@ -307,16 +308,16 @@
         letter-spacing: var(--letter-spacing);
     }
 
-    #hesapduzenle-container #buttons,
+    .full {
+        width: 720px !important;
+    }
+
     #searchbox {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         column-gap: 20px;
-    }
-
-    #searchbox {
         margin-bottom: 20px;
         border-bottom: solid 1px var(--dark-color);
         padding-bottom: 20px;
