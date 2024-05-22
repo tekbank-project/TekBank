@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const SubeModel = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    SubeAd: { type: String },
-    SubeKonum: { type: String },
-})
+    SubeAd: { type: String, required: true },
+    SubeAdres: { type: String, required: true }
+});
 
 module.exports = mongoose.model('SubeModel', SubeModel);
