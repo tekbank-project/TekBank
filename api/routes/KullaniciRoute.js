@@ -11,4 +11,6 @@ router.post('/cikis', KullaniciController.Cikis);
 router.patch('/guncelle', KullaniciController.KullaniciGuncelle);
 router.delete('/kayitsil', KullaniciController.KullaniciSil);
 
+router.post('/kullanicidetay', KullaniciController.KullaniciDetay);
+
 module.exports = router;

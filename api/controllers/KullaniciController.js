@@ -154,3 +154,17 @@ exports.KullaniciSil = async (req, res, next) => {
         return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
     });
 };
+
+exports.KullaniciDetay = async (req, res, next) => {
+    /*const auth = req.userData;
+    if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
+    if (YetkiKontrol(req.body.KullaniciEmail, "KullaniciDetay") === false) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
+    */
+    KullaniciModel.find({ KullaniciEmail: req.body.KullaniciEmail }).exec().then(results => {
+        if (results.length == 0) { return res.status(500).json({ message: 'Internal server error' }); };
+        return res.status(200).json(results);
+    }).catch(err => {
+        console.log(err);
+        return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' });
+    });
+};

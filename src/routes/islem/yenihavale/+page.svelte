@@ -1,13 +1,16 @@
 <script>
     import { onMount } from "svelte";
-
+    import { goto } from "$app/navigation";
     let gondericihesapinput = "";
     let alicihesapnoinput = "";
     let miktarinput = "";
     export var hesaplar = [];
     export async function handleSubmit(event) {
         event.preventDefault();
-
+        if (!gondericihesapinput || !alicihesapnoinput || !miktarinput) {
+            window.alert("Lütfen formu eksiksiz doldurunuz.");
+            return;
+        }
         try {
             const response = await fetch(
                 "http://localhost:4000/api/hesap/hesapkontrol",
@@ -58,7 +61,7 @@
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Auth: `Bearer ${localStorage.getItem("token")}`,
+                        "Auth": `Bearer ${localStorage.getItem("token")}`,
                     },
                 },
             );
@@ -67,7 +70,7 @@
                 window.alert(
                     "Havale yapmanız için hesabınız bulunması gerekmektedir.",
                 );
-                throw new Error();
+                goto("/hesap/yenihesap");
             }
         } catch (error) {
             console.error(error);

@@ -8,7 +8,15 @@
         const token = localStorage.getItem("token");
         if (token === null) { isAuth = false; }
     }
-    onMount(() => { eposta = localStorage.getItem("email"); });
+    onMount(() => {
+        checkAuth();
+        if (!isAuth) {
+            setTimeout(() => {
+                goto("/kullanici/giris");
+            }, 1);
+        }
+        eposta = localStorage.getItem("email");
+    });
 </script>
 
 <aside id="sidebar">
@@ -22,6 +30,7 @@
     <ul id="menu">
         <li class="section-header">Hesap</li>
         <li><a href="/hesap/hesaplarim" class="menu-btn">Hesaplarım</a></li>
+        <li><a href="/hesap/yenihesap" class="menu-btn">Yeni Hesap Oluştur</a></li>
         <li class="section-header">İşlemler</li>
         <li><a href="/islem/yenihavale" class="menu-btn">Havale Yap</a></li>
         <li><a href="/islem/islemgecmisi" class="menu-btn">İşlem Geçmişi</a></li>

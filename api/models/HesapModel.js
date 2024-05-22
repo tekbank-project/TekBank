@@ -6,6 +6,7 @@ const HesapModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'KullaniciModel'
     },
+    HesapAdi: { type: String },
     HesapNo: { type: Number },
     Bakiye: { type: Number },
     Aktiflik: { type: Boolean }

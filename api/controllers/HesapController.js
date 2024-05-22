@@ -26,16 +26,16 @@ exports.TumHesaplar = async (req, res, next) => {
     });
 };
 
-exports.HesapKontrol = async (req, res, next) => {
+exports.HesapDetay = async (req, res, next) => {
     /*const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
     */
     HesapModel.find({ HesapNo: req.body.HesapNo }).exec().then(results => {
         console.log(results);
         if (results.length === 0) {
-            return res.status(404);
+            return res.status(404).json({ message: "Hesap bulunamadi." });
         } else {
-            return res.status(200);
+            return res.status(200).json(results);
         }
     }).catch(err => {
         console.log(err);
@@ -51,6 +51,7 @@ exports.YeniHesap = async (req, res, next) => {
         const newHesap= new HesapModel({
             _id: new mongoose.Types.ObjectId(),
             KullaniciId: results._id,
+            HesapAdi: req.body.HesapAdi, 
             HesapNo: GenerateHesapNo(),
             Bakiye: 0,
             Aktiflik: true
@@ -72,20 +73,18 @@ exports.HesapGuncelle = async (req, res, next) => {
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
     if (YetkiKontrol(req.body.KullaniciEmail, "HesapGuncelleme") === false) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
     */
-    KullaniciModel.find({ KullaniciEmail: req.body.KullaniciEmail }).exec().then(user => {
-        const update = {};
-        for (const key of Object.keys(req.body)) {
-            if (req.body[key]) { update[key] = req.body[key]; };
-        };
-        HesapModel.findOneAndUpdate(
-            { KullaniciId: user._id },
-            { $set: update }
-        ).exec().then(result => {
-            res.status(200).json({ message: 'Hesap guncellendi.' });
-        }).catch(err => {
-            console.log(err);
-            res.status(500).json({ message: 'Internal server error' });
-        });
+    const update = {};
+    for (const key of Object.keys(req.body)) {
+        if (req.body[key]) { update[key] = req.body[key]; };
+    };
+    if (req.body.HesapNo) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+    HesapModel.findOneAndUpdate(
+        { KullaniciId: req.body.HesapNo },
+        { $set: update }
+    ).exec().then(result => {
+        res.status(200).json({ message: 'Hesap guncellendi.' });
     }).catch(err => {
         console.log(err);
         res.status(500).json({ message: 'Internal server error' });
