@@ -6,15 +6,7 @@ const HesapModel = require('../models/HesapModel');
 const KullaniciModel = require('../models/KullaniciModel');
 
 function GenerateHesapNo() {
-    while (true) {
-        const GeneratedHesapNo = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
-        HesapModel.find({ HesapNo: GeneratedHesapNo }).exec().then(results => {
-            if (results.length == 0) { return GeneratedHesapNo; };
-        }).catch(err => {
-            console.log(err);
-            return 0;
-        });
-    };
+    return Math.floor(Math.random() * (9999999999 - 1000000000 + 1)) + 100000;
 };
 
 exports.TumHesaplar = async (req, res, next) => {
@@ -23,8 +15,7 @@ exports.TumHesaplar = async (req, res, next) => {
     */
     KullaniciModel.find({ KullaniciEmail: req.body.KullaniciEmail }).exec().then(user => {
         HesapModel.find({ KullaniciId: user._id }).exec().then(results => {
-            console.log(results);
-            return res.status(200).json({ message: results });
+            return res.status(200).json(results);
         }).catch(err => {
             console.log(err)
             return res.status(500).json({ message: 'Internal server error' });
@@ -65,7 +56,7 @@ exports.YeniHesap = async (req, res, next) => {
             Aktiflik: true
         });
         newHesap.save().then(result => {
-            res.status(201).json({ message: 'Yeni hesap olusturuldu.' });
+            return res.status(201).json({ message: 'Yeni hesap olusturuldu.' });
         }).catch(err => {
             console.log(err);
             return res.status(500).json({ message: 'Internal server error' });
@@ -90,7 +81,6 @@ exports.HesapGuncelle = async (req, res, next) => {
             { KullaniciId: user._id },
             { $set: update }
         ).exec().then(result => {
-            console.log(result);
             res.status(200).json({ message: 'Hesap guncellendi.' });
         }).catch(err => {
             console.log(err);
@@ -106,15 +96,8 @@ exports.HesapSil = async (req, res, next) => {
     /*const auth = req.userData;
     if (!auth) { return res.status(401).json({ message: 'Bu islem icin yetkiniz yoktur.' }); };
     */
-    KullaniciModel.find({ KullaniciEmail: req.body.KullaniciEmail }).exec().then(results => {
-        if (results.length == 0) { return res.status(500).json({ message: 'Internal server error' }); };
-        HesapModel.findOneAndDelete({ KullaniciId: results._id }).exec().then(result => {
-            console.log(result);
-            return res.status(200).json({ message: 'Hesap basariyle silindi.' })
-        }).catch(err => {
-            console.log(err);
-            return res.status(500).json({ message: 'Internal server error' });
-        });
+    HesapModel.findOneAndDelete({ HesapNo: req.body.HesapNo }).exec().then(result => {
+        return res.status(200).json({ message: 'Hesap basariyle silindi.' })
     }).catch(err => {
         console.log(err);
         return res.status(500).json({ message: 'Internal server error' });

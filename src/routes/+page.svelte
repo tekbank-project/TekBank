@@ -16,7 +16,7 @@
             }, 1);
         } else {
             setTimeout(() => {
-                goto("/hesap/detaylar");
+                goto("/hesap/hesaplarim");
             }, 1);
         }
     });

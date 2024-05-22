@@ -31,7 +31,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/havale', HavaleRoutes);
+app.use('/api/islem', HavaleRoutes);
 app.use('/api/hesap', HesapRoutes);
 app.use('/api/kullanici', KullaniciRoutes);
 app.use('/api/sube', SubeRoutes);

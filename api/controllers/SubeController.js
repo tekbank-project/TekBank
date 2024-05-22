@@ -6,7 +6,6 @@ const SubeModel = require('../models/SubeModel');
 
 exports.TumSubeler = async (req, res, next) => {
     SubeModel.find({}).exec().then(results => {
-        console.log(results);
         return res.status(200).json(results);
     }).catch(err => {
         console.log(err)
@@ -27,7 +26,7 @@ exports.YeniSube = async (req, res, next) => {
         SubeKonum: req.body.SubeKonum,
     });
     newSube.save().then(result => {
-        res.status(201).json({ message: 'Yeni sube olusturuldu.' });
+        return res.status(201).json({ message: 'Yeni sube olusturuldu.' });
     }).catch(err => {
         console.log(err);
         return res.status(500).json({ message: 'Internal server error' });
@@ -49,7 +48,6 @@ exports.SubeGuncelle = async (req, res, next) => {
         { SubeId: req.body.SubeId },
         { $set: update }
     ).exec().then(result => {
-        console.log(result);
         res.status(200).json({ message: 'Sube guncellendi.' });
     }).catch(err => {
         console.log(err);
@@ -66,7 +64,6 @@ exports.SubeSil = async (req, res, next) => {
 
     if (results.length == 0) { return res.status(500).json({ message: 'Internal server error' }); };
     SubeModel.findOneAndDelete({ SubeId: req.body.SubeId }).exec().then(result => {
-        console.log(result);
         return res.status(200).json({ message: 'Sube basariyle silindi.' })
     }).catch(err => {
         console.log(err);

@@ -13,18 +13,16 @@ exports.GecmisHavaleler = async (req, res, next) => {
     */
     KullaniciModel.find({ KullaniciEmail: req.body.KullaniciEmail }).exec().then(results => {
         if (results.length >= 1) {
-            console.log(results);
             return res.status(401).json({ message: 'Gecmis havale bulunamadi.' });
         };
         HavaleModel.find({ GondericiHesapId: results._id }).exec().then(results => {
-            console.log(results);
             return res.status(200).json({ message: results });
         }).catch(err => {
-            console.log(err)
+            console.log(err);
             return res.status(500).json({ message: 'Internal server error' });
         });
     }).catch(err => {
-        console.log(err)
+        console.log(err);
         return res.status(500).json({ message: 'Internal server error' });
     });
 };

@@ -33,7 +33,7 @@
         } catch (error) {
             console.error(error);
         }
-        window.alert(message);
+        alert(message);
     }
 </script>
 

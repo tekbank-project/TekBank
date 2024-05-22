@@ -9,7 +9,6 @@ exports.YeniKayit = async (req, res, next) => {
     const salt = await bcrpyt.genSalt();
     KullaniciModel.find({ KullaniciEmail: req.body.KullaniciEmail }).exec().then(results => {
         if (results.length >= 1) {
-            console.log(results);
             return res.status(401).json({ message: 'Bu e-posta ile kayitli bir kullanıcı bulunmaktadir.' });
         }
         bcrpyt.hash(req.body.KullaniciSifre, salt, (err, hash) => {
@@ -38,7 +37,7 @@ exports.YeniKayit = async (req, res, next) => {
             };
         });
     }).catch(err => {
-        console.log(err)
+        console.log(err);
         return res.status(500).json({ message: 'Internal server error' });
     });
 };
@@ -82,7 +81,6 @@ exports.Cikis = async (req, res, next) => {
         { KullaniciEmail: req.body.KullaniciEmail },
         { YetkiToken: 0 }
     ).exec().then(result => {
-        console.log(result);
         return res.status(200).json({ message: "Basariyla cikis yapildi." });
     }).catch(err => {
         console.log(err);
@@ -110,7 +108,6 @@ exports.KullaniciGuncelle = async (req, res, next) => {
                     { KullaniciEmail: req.body.KullaniciEmail },
                     { $set: update }
                 ).exec().then(result => {
-                    console.log(result);
                     return res.status(200).json({ message: 'Kullanici guncellendi.' });
                 }).catch(err => {
                     console.log(err);
@@ -127,7 +124,6 @@ exports.KullaniciGuncelle = async (req, res, next) => {
         { KullaniciEmail: req.body.KullaniciEmail },
         { $set: update }
     ).exec().then(result => {
-        console.log(result);
         res.status(200).json({ message: 'Kullanici guncellendi.' });
     }).catch(err => {
         console.log(err);

@@ -8,15 +8,7 @@
         const token = localStorage.getItem("token");
         if (token === null) { isAuth = false; }
     }
-    onMount(() => {
-        checkAuth();
-        if (!isAuth) {
-            setTimeout(() => {
-                goto("/kullanici/giris");
-            }, 1);
-        }
-        eposta = localStorage.getItem("email");
-    });
+    onMount(() => { eposta = localStorage.getItem("email"); });
 </script>
 
 <aside id="sidebar">
@@ -25,19 +17,16 @@
         <h1 id="name">TekBank</h1>
     </div>
     <div id="userinfo">
-        <span id="username">mahmut yavru</span>
         <span id="usermail">{eposta}</span>
     </div>
     <ul id="menu">
         <li class="section-header">Hesap</li>
-        <li><a href="/hesap/detaylar" class="menu-btn">Hesap Detayları</a></li>
         <li><a href="/hesap/hesaplarim" class="menu-btn">Hesaplarım</a></li>
-        <li><a href="/hesap/yenihesap" class="menu-btn">Yeni Hesap Oluştur</a></li>
         <li class="section-header">İşlemler</li>
         <li><a href="/islem/yenihavale" class="menu-btn">Havale Yap</a></li>
         <li><a href="/islem/islemgecmisi" class="menu-btn">İşlem Geçmişi</a></li>
         <li class="section-header">Seçenekler</li>
-        <li><a href="/" class="menu-btn">Çıkış Yap</a></li>
+        <li><a href="/kullanici/cikis" class="menu-btn">Çıkış Yap</a></li>
     </ul>
 </aside>
 <main id="content">
@@ -115,7 +104,6 @@
     #usermail {
         color: var(--transparent-light-color);
         font-size: var(--smaller-font-size);
-        margin-left: 2px;
     }
 
     #content {

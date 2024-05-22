@@ -68,7 +68,7 @@
         } catch (error) {
             console.error(error);
         }
-        window.alert(message);
+        alert(message);
     }
     export var subeler = [];
     onMount(async () => {
