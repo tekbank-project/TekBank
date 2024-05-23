@@ -68,7 +68,7 @@
         <button type="submit">Giriş Yap</button>
     </form>
     <div id="bottom-texts">
-        <a href="kullanici/yenikayit">Yeni hesap oluşturun</a>
+        <a href="/kullanici/yenikayit">Yeni hesap oluşturun</a>
     </div>
 </section>
 
